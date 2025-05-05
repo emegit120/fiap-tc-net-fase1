@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>FIAP Cloud Games - Planejamento de Sprints</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .sprint {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .priority {
+            font-weight: bold;
+        }
+        .high { color: #e74c3c; }
+        .medium { color: #f39c12; }
+        .low { color: #27ae60; }
+        .done {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .not-done {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .task-id {
+            font-family: monospace;
+            color: #7f8c8d;
+        }
+        .description {
+            font-size: 0.9em;
+            color: #666;
+            padding-left: 20px;
+            border-top: none;
+            display: none;
+        }
+        .task-row {
+            border-bottom: none;
+            cursor: pointer;
+        }
+        .task-row:hover {
+            background-color: #f0f0f0;
+        }
+        .description-row {
+            background-color: #fafafa;
+        }
+        .description-row td {
+            padding-top: 0;
+            padding-bottom: 12px;
+        }
+        .task-row.expanded + .description-row .description {
+            display: block;
+        }
+        .task-row.expanded {
+            background-color: #f0f0f0;
+        }
+        .task-title {
+            display: flex;
+            align-items: center;
+        }
+        .task-title::before {
+            content: '▶';
+            margin-right: 8px;
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+        .task-row.expanded .task-title::before {
+            transform: rotate(90deg);
+        }
+    </style>
+    <script>
+        function toggleDescription(row) {
+            row.classList.toggle('expanded');
+        }
+    </script>
+</head>
+<body>
+    <h1>FIAP Cloud Games - Planejamento de Sprints</h1>
+    <p>Período: 05/05/2025 - 31/05/2025</p>
+
+    <div class="sprint">
+        <h2>Sprint 1 (05/05 - 11/05)</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tarefa</th>
+                <th>Prioridade</th>
+                <th>Complexidade</th>
+                <th>Responsável</th>
+                <th>Done</th>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S1-001</td>
+                <td><div class="task-title">Configuração do Projeto .NET 8</div></td>
+                <td class="priority high">Alta</td>
+                <td>Média</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Criar solução .NET 8<br>
+                        - Configurar estrutura de pastas seguindo DDD<br>
+                        - Configurar dependências básicas<br>
+                        - Configurar ambiente de desenvolvimento
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S1-002</td>
+                <td><div class="task-title">Configuração do Entity Framework Core</div></td>
+                <td class="priority high">Alta</td>
+                <td>Média</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Instalar pacotes do EF Core<br>
+                        - Configurar conexão com banco de dados<br>
+                        - Configurar migrations<br>
+                        - Implementar padrão Repository
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S1-003</td>
+                <td><div class="task-title">Criação dos Modelos Base (User, Game)</div></td>
+                <td class="priority high">Alta</td>
+                <td>Baixa</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Criar entidade User com propriedades básicas<br>
+                        - Criar entidade Game com propriedades básicas<br>
+                        - Implementar validações de domínio<br>
+                        - Configurar relacionamentos entre entidades
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S1-004</td>
+                <td><div class="task-title">Configuração do Swagger</div></td>
+                <td class="priority medium">Média</td>
+                <td>Baixa</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Instalar pacote Swagger<br>
+                        - Configurar documentação básica<br>
+                        - Configurar autenticação no Swagger<br>
+                        - Documentar endpoints iniciais
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="sprint">
+        <h2>Sprint 2 (12/05 - 18/05)</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tarefa</th>
+                <th>Prioridade</th>
+                <th>Complexidade</th>
+                <th>Responsável</th>
+                <th>Done</th>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S2-001</td>
+                <td><div class="task-title">Implementação da Autenticação JWT</div></td>
+                <td class="priority high">Alta</td>
+                <td>Alta</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar geração de token JWT<br>
+                        - Configurar refresh tokens<br>
+                        - Implementar middleware de autenticação<br>
+                        - Configurar políticas de autorização
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S2-002</td>
+                <td><div class="task-title">Implementação do Cadastro de Usuários</div></td>
+                <td class="priority high">Alta</td>
+                <td>Média</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar endpoint de cadastro<br>
+                        - Implementar validações de usuário<br>
+                        - Implementar criptografia de senha<br>
+                        - Implementar confirmação de email
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S2-003</td>
+                <td><div class="task-title">Implementação do Login/Logout</div></td>
+                <td class="priority high">Alta</td>
+                <td>Média</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar endpoint de login<br>
+                        - Implementar endpoint de logout<br>
+                        - Implementar recuperação de senha<br>
+                        - Implementar bloqueio de conta
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S2-004</td>
+                <td><div class="task-title">Configuração de Logs</div></td>
+                <td class="priority medium">Média</td>
+                <td>Baixa</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Configurar Serilog<br>
+                        - Implementar logs estruturados<br>
+                        - Configurar níveis de log<br>
+                        - Implementar logs de performance
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="sprint">
+        <h2>Sprint 3 (19/05 - 25/05)</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tarefa</th>
+                <th>Prioridade</th>
+                <th>Complexidade</th>
+                <th>Responsável</th>
+                <th>Done</th>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S3-001</td>
+                <td><div class="task-title">Implementação do CRUD de Jogos</div></td>
+                <td class="priority high">Alta</td>
+                <td>Média</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar endpoints CRUD<br>
+                        - Implementar validações de jogo<br>
+                        - Implementar upload de imagens<br>
+                        - Implementar categorização
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S3-002</td>
+                <td><div class="task-title">Implementação da Biblioteca de Jogos</div></td>
+                <td class="priority high">Alta</td>
+                <td>Média</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar relacionamento usuário-jogos<br>
+                        - Implementar endpoints da biblioteca<br>
+                        - Implementar download de jogos<br>
+                        - Implementar verificação de licença
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S3-003</td>
+                <td><div class="task-title">Implementação de Testes Unitários</div></td>
+                <td class="priority high">Alta</td>
+                <td>Alta</td>
+                <td>QA</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Configurar xUnit<br>
+                        - Implementar testes de domínio<br>
+                        - Implementar testes de serviços<br>
+                        - Implementar testes de repositórios
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S3-004</td>
+                <td><div class="task-title">Implementação de Testes de Integração</div></td>
+                <td class="priority medium">Média</td>
+                <td>Alta</td>
+                <td>QA</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Configurar banco de testes<br>
+                        - Implementar testes de API<br>
+                        - Implementar testes de autenticação<br>
+                        - Implementar testes de fluxos completos
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="sprint">
+        <h2>Sprint 4 (26/05 - 31/05)</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Tarefa</th>
+                <th>Prioridade</th>
+                <th>Complexidade</th>
+                <th>Responsável</th>
+                <th>Done</th>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S4-001</td>
+                <td><div class="task-title">Implementação do Sistema de Promoções</div></td>
+                <td class="priority high">Alta</td>
+                <td>Alta</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar modelo de promoções<br>
+                        - Implementar endpoints de promoções<br>
+                        - Implementar validações de desconto<br>
+                        - Implementar notificações de promoção
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S4-002</td>
+                <td><div class="task-title">Otimização de Performance</div></td>
+                <td class="priority medium">Média</td>
+                <td>Alta</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar cache<br>
+                        - Otimizar queries<br>
+                        - Implementar paginação<br>
+                        - Configurar compressão
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S4-003</td>
+                <td><div class="task-title">Documentação Final da API</div></td>
+                <td class="priority medium">Média</td>
+                <td>Baixa</td>
+                <td>Dev Backend</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Atualizar documentação Swagger<br>
+                        - Documentar todos os endpoints<br>
+                        - Adicionar exemplos de uso<br>
+                        - Documentar erros e códigos de status
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">S4-004</td>
+                <td><div class="task-title">Testes de Carga e Segurança</div></td>
+                <td class="priority high">Alta</td>
+                <td>Alta</td>
+                <td>QA</td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="6">
+                    <div class="description">
+                        - Implementar testes de carga<br>
+                        - Realizar testes de segurança<br>
+                        - Validar performance<br>
+                        - Documentar resultados
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="sprint">
+        <h2>Entregáveis por Sprint</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Sprint</th>
+                <th>Entregáveis</th>
+                <th>Done</th>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">D1-001</td>
+                <td>Sprint 1</td>
+                <td><div class="task-title">
+                    - Projeto base configurado<br>
+                    - Banco de dados configurado<br>
+                    - Modelos iniciais criados<br>
+                    - Documentação Swagger inicial
+                </div></td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="4">
+                    <div class="description">
+                        - Código fonte versionado<br>
+                        - Documentação técnica inicial<br>
+                        - Ambiente de desenvolvimento configurado<br>
+                        - Pipeline de CI/CD inicial
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">D2-001</td>
+                <td>Sprint 2</td>
+                <td><div class="task-title">
+                    - Sistema de autenticação funcionando<br>
+                    - Cadastro e login de usuários<br>
+                    - Sistema de logs implementado
+                </div></td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="4">
+                    <div class="description">
+                        - Testes de autenticação<br>
+                        - Documentação de segurança<br>
+                        - Logs de sistema funcionando<br>
+                        - Relatório de cobertura de testes
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">D3-001</td>
+                <td>Sprint 3</td>
+                <td><div class="task-title">
+                    - CRUD completo de jogos<br>
+                    - Biblioteca de jogos funcionando<br>
+                    - Testes automatizados implementados
+                </div></td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="4">
+                    <div class="description">
+                        - Testes unitários e de integração<br>
+                        - Documentação da API atualizada<br>
+                        - Relatório de cobertura de testes<br>
+                        - Ambiente de homologação
+                    </div>
+                </td>
+            </tr>
+            <tr class="task-row" onclick="toggleDescription(this)">
+                <td class="task-id">D4-001</td>
+                <td>Sprint 4</td>
+                <td><div class="task-title">
+                    - Sistema de promoções implementado<br>
+                    - Performance otimizada<br>
+                    - Documentação completa<br>
+                    - Testes de carga e segurança
+                </div></td>
+                <td class="not-done">Não</td>
+            </tr>
+            <tr class="description-row">
+                <td colspan="4">
+                    <div class="description">
+                        - Relatório de performance<br>
+                        - Relatório de segurança<br>
+                        - Documentação final<br>
+                        - Ambiente de produção
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html> 
