@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIAPTechChallenge", "FIAPTechChallenge.csproj", "{A3CD21CD-139E-9C63-E694-581D75786AB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIAPTechChallenge.Tests", "..\FiapTechChallenge.Tests\FIAPTechChallenge.Tests.csproj", "{738E185E-E007-4DF3-BCFB-B75CAB0C4B74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3CD21CD-139E-9C63-E694-581D75786AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CD21CD-139E-9C63-E694-581D75786AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CD21CD-139E-9C63-E694-581D75786AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CD21CD-139E-9C63-E694-581D75786AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{738E185E-E007-4DF3-BCFB-B75CAB0C4B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{738E185E-E007-4DF3-BCFB-B75CAB0C4B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{738E185E-E007-4DF3-BCFB-B75CAB0C4B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{738E185E-E007-4DF3-BCFB-B75CAB0C4B74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE34D90F-BC41-4A3C-AF39-27BBE745E28F}
+	EndGlobalSection
+EndGlobal

@@ -3,7 +3,6 @@
 ## ADR-001: Arquitetura Monolítica para MVP
 
 ### Status
-- **Data**: [Data Atual]
 - **Status**: Aceito
 - **Contexto**: Necessidade de desenvolver rapidamente o MVP da plataforma FCG.
 
@@ -25,7 +24,6 @@ Adotar uma arquitetura monolítica para o MVP, utilizando .NET 8 com uma estrutu
 ## ADR-002: Domain-Driven Design (DDD)
 
 ### Status
-- **Data**: [Data Atual]
 - **Status**: Aceito
 - **Contexto**: Necessidade de modelar o domínio do negócio de forma clara e organizada.
 
@@ -73,7 +71,6 @@ Utilizar Entity Framework Core como ORM principal, com SQL Server como banco de 
 ## ADR-004: Autenticação JWT
 
 ### Status
-- **Data**: [Data Atual]
 - **Status**: Aceito
 - **Contexto**: Necessidade de um sistema de autenticação seguro e escalável.
 
@@ -95,7 +92,6 @@ Implementar autenticação usando JWT com refresh tokens.
 ## ADR-005: Testes Automatizados
 
 ### Status
-- **Data**: [Data Atual]
 - **Status**: Aceito
 - **Contexto**: Necessidade de garantir qualidade e facilitar manutenção.
 

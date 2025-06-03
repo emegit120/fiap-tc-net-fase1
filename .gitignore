@@ -1,0 +1,65 @@
+## Ignore arquivos e pastas do Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build Results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+TestResults/
+out/
+
+## Arquivos de publicação
+publish/
+*.Publish.xml
+
+## Arquivos de pacotes NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Arquivos de configuração do Rider
+.idea/
+*.sln.iml
+
+## Arquivos de cache do Visual Studio Code
+.vscode/
+
+## Arquivos de backup e temporários
+*~
+*.tmp
+*.bak
+*.swp
+*.scc
+
+## Arquivos de log
+*.log
+
+## Arquivos de banco de dados locais
+*.mdf
+*.ldf
+
+## Arquivos de configuração de usuário
+appsettings.Development.json
+appsettings.Local.json
+
+## Arquivos de diretórios do sistema operacional
+.DS_Store
+Thumbs.db
+
+## Arquivos de teste e cobertura
+coverage/
+*.coverage
+*.coveragexml
+
+## Arquivos de containers Docker
+docker-compose.override.yml
+
+# Fim do .gitignore
