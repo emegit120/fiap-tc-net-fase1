@@ -1,8 +1,10 @@
 ﻿using FIAPTechChallenge.Application.DTOs;
 using FIAPTechChallenge.Domain.Entities;
 using FIAPTechChallenge.Domain.Interfaces;
+using FIAPTechChallenge.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FIAPTechChallenge.Presentation.Controllers
@@ -10,11 +12,12 @@ namespace FIAPTechChallenge.Presentation.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class UserController(IUserRepository repository, IRepository<Role> roleRepository, ILogger<UserController> logger) : ControllerBase
+    public class UserController(IUserRepository repository, IRepository<Role> roleRepository, ILogger<UserController> logger, FiapDbContext context) : ControllerBase
     {
         private readonly IUserRepository _repository = repository;
         private readonly IRepository<Role> _roleRepository = roleRepository;
         private readonly ILogger<UserController> _logger = logger;
+        private readonly FiapDbContext _context = context;
 
         [Authorize(Policy = "AdminOnly")]
         [HttpGet]
@@ -22,14 +25,19 @@ namespace FIAPTechChallenge.Presentation.Controllers
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAll()
         {
             _logger.LogInformation("Listando todos os usuários.");
-            var users = await _repository.GetAllAsync();
+
+            var users = await _context.Users
+                .Include(p => p.Games)
+                .ToListAsync();
+
             var result = users.Select(u => new UserResponseDto
             {
                 Id = u.Id,
                 Name = u.Name,
                 Email = u.Email,
                 CreatedAt = u.CreatedAt,
-                UpdatedAt = u.UpdatedAt
+                UpdatedAt = u.UpdatedAt,
+                GameIds = u.Games.Select(g => g.Id).ToList()
             });
             return Ok(result);
         }
@@ -40,7 +48,11 @@ namespace FIAPTechChallenge.Presentation.Controllers
         public async Task<ActionResult<UserResponseDto>> GetById(int id)
         {
             _logger.LogInformation("Buscando usuário por ID: {UserId}", id);
-            var user = await _repository.GetByIdAsync(id);
+             var user = await _context.Users
+                .Include(p => p.Games)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+
             if (user == null)
             {
                 _logger.LogWarning("Usuário não encontrado: {UserId}", id);
@@ -53,7 +65,8 @@ namespace FIAPTechChallenge.Presentation.Controllers
                 Name = user.Name,
                 Email = user.Email,
                 CreatedAt = user.CreatedAt,
-                UpdatedAt = user.UpdatedAt
+                UpdatedAt = user.UpdatedAt,
+                GameIds = user.Games.Select(g => g.Id).ToList()
             };
             return Ok(result);
         }
@@ -109,13 +122,17 @@ namespace FIAPTechChallenge.Presentation.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "UserOrAdmin")]
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Atualiza um usuário (Acesso: Admin)")]
+        [SwaggerOperation(Summary = "Atualiza um usuário")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateUserDto dto)
         {
             _logger.LogInformation("Atualizando usuário: {UserId}", id);
-            var user = await _repository.GetByIdAsync(id);
+
+            var user = await _context.Users
+                .Include(p => p.Games)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
             if (user == null)
             {
                 _logger.LogWarning("Usuário não encontrado para atualização: {UserId}", id);
@@ -127,11 +144,25 @@ namespace FIAPTechChallenge.Presentation.Controllers
                 if (dto.Name is not null)
                     user.SetName(dto.Name);
 
-                if (dto.Email is not null)
-                    user.SetEmail(dto.Email);
-
                 if (dto.Password is not null)
                     user.SetPassword(dto.Password);
+
+                if (dto.GameIds is not null)
+                {
+                    var games = await _context.Games
+                        .Where(g => dto.GameIds.Contains(g.Id))
+                        .ToListAsync();
+
+                    if (games.Count != dto.GameIds.Count)
+                    {
+                        _logger.LogWarning("Um ou mais jogos informados não existem.");
+                        return BadRequest(new { error = "Um ou mais jogos informados não existem." });
+                    }
+
+                    user.Games.Clear();
+                    foreach (var game in games)
+                        user.Games.Add(game);
+                }
 
                 await _repository.SaveChangesAsync();
 
@@ -143,7 +174,8 @@ namespace FIAPTechChallenge.Presentation.Controllers
                     Name = user.Name,
                     Email = user.Email,
                     CreatedAt = user.CreatedAt,
-                    UpdatedAt = user.UpdatedAt
+                    UpdatedAt = user.UpdatedAt,
+                    GameIds = user.Games.Select(g => g.Id).ToList()
                 };
 
                 return Ok(result);

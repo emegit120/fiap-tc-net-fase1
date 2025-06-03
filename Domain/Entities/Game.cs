@@ -10,6 +10,7 @@
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public ICollection<Category> Categories { get; set; } = new List<Category>();
 
+
         protected Game() { }
 
         public Game(string name, string description, decimal price)

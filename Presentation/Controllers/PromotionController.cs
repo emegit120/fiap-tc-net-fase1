@@ -92,14 +92,7 @@ namespace FIAPTechChallenge.Presentation.Controllers
                 return BadRequest(new { error = "Um ou mais jogos informados não existem." });
             }
 
-            var promotion = new Promotion
-            {
-                Name = dto.Name,
-                DiscountPercentage = dto.DiscountPercentage,
-                StartDate = dto.StartDate,
-                EndDate = dto.EndDate,
-                Games = games
-            };
+            var promotion = new Promotion(dto.Name, dto.DiscountPercentage, dto.StartDate, dto.EndDate);
 
             try
             {

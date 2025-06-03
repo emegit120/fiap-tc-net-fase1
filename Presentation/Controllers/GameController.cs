@@ -107,6 +107,8 @@ namespace FIAPTechChallenge.Presentation.Controllers
             return Ok(result);
         }
 
+        
+
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [SwaggerOperation(Summary = "Cria um novo jogo (Acesso: Admin)")]
@@ -146,6 +148,74 @@ namespace FIAPTechChallenge.Presentation.Controllers
                 _logger.LogError(ex, "Erro inesperado ao criar jogo.");
                 return StatusCode(500, new { error = ex.Message });
             }
+        }
+
+        [Authorize(Policy = "UserOrAdmin")]
+        [HttpPost("List")]
+        [SwaggerOperation(Summary = "Retorna uma lista de games")]
+        public async Task<IActionResult> GameList([FromBody] GameIdRequest request)
+        {
+
+
+            try
+            {
+                _logger.LogInformation("Buscando jogos pelos IDs informados.");
+
+                if (request?.GameIds == null || request.GameIds.Count == 0)
+                    return BadRequest("Lista de IDs inválida.");
+
+                var now = DateTime.UtcNow;
+
+                var promotions = await _context.Promotions
+                    .Include(p => p.Games)
+                    .Where(p => p.StartDate <= now && p.EndDate >= now)
+                    .ToListAsync();
+
+                var games = await _context.Games
+                  .Where(g => request.GameIds.Contains(g.Id))
+                  .ToListAsync();
+
+                var result = games.Select(g =>
+                {
+                    var gamePromotions = promotions
+                        .Where(p => p.Games.Any(game => game.Id == g.Id) && p.DiscountPercentage > 0)
+                        .OrderByDescending(p => p.DiscountPercentage)
+                        .ToList();
+
+                    decimal? discountedPrice = null;
+                    if (gamePromotions.Any())
+                    {
+                        var bestPromotion = gamePromotions.First();
+                        discountedPrice = g.Price * (1 - (bestPromotion.DiscountPercentage / 100m));
+                        discountedPrice = Math.Max(discountedPrice ?? 0, 0);
+                    }
+
+                    return new GameResponseDto
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        Description = g.Description,
+                        Price = g.Price,
+                        DiscountedPrice = discountedPrice,
+                        CreatedAt = g.CreatedAt,
+                        UpdatedAt = g.UpdatedAt
+                    };
+                }).ToList();
+
+                if (result.Count == 0)
+                {
+                    _logger.LogWarning("Nenhum jogo encontrado para os IDs informados.");
+                    return NotFound(new { error = "Nenhum jogo encontrado." });
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro inesperado ao buscar jogos.");
+                return StatusCode(500, new { error = ex.Message });
+            }
+
         }
 
         [Authorize(Policy = "AdminOnly")]

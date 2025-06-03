@@ -16,8 +16,7 @@ namespace FIAPTechChallenge.Infrastructure.Data
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Games)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithMany();
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
