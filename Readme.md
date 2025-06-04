@@ -167,9 +167,6 @@ Rotas para iniciar:
  - emerson1446 
  - Emerson (Dev)
 
-Drive
-https://drive.google.com/drive/folders/1aWhEohEN1jrx0Us3lN1ivedb1SbVVxTo?usp=sharing
-
 Link da documentação.
 https://www.figma.com/board/1s1MvlkKbtpnq9UmfFQfv3/DDD---Event-Storming?node-id=0-1&p=f
 
@@ -177,6 +174,7 @@ GITHUB
 https://github.com/emegit120/fiap-tc-net-fase1
 
 Video
+https://drive.google.com/drive/folders/1aWhEohEN1jrx0Us3lN1ivedb1SbVVxTo?usp=sharing
 
 
 ## Licença
