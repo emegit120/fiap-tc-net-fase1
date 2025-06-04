@@ -13,12 +13,13 @@
 
         protected Promotion() { }
 
-        public Promotion(string name, decimal discountPercentage, DateTime startDate, DateTime endDate)
+        public Promotion(string name, decimal discountPercentage, DateTime startDate, DateTime endDate, ICollection<Game> games)
         {
             SetName(name);
             SetDiscountPercentage(discountPercentage);
             StartDate = startDate;
             EndDate = endDate;
+            Games = games;
         }
 
         public void SetName(string name)

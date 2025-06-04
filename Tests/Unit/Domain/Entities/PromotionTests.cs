@@ -14,7 +14,8 @@ namespace FiapTechChallenge.Tests.Domain.Entities
                 "Promoção",
                 20,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddDays(1)
+                DateTime.UtcNow.AddDays(1),
+                []
             );
 
             Assert.Equal("Promoção", promotion.Name);
@@ -32,7 +33,8 @@ namespace FiapTechChallenge.Tests.Domain.Entities
                 "Promoção",
                 discount,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddDays(1)
+                DateTime.UtcNow.AddDays(1),
+                []
             );
 
             Assert.True(promotion.DiscountPercentage > 0);
@@ -51,7 +53,8 @@ namespace FiapTechChallenge.Tests.Domain.Entities
                 "Promoção",
                 10,
                 start,
-                end
+                end,
+                []
             );
 
             Assert.True(promotion.EndDate < promotion.StartDate);
@@ -65,7 +68,8 @@ namespace FiapTechChallenge.Tests.Domain.Entities
                 "Black Friday",
                 30,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddDays(2)
+                DateTime.UtcNow.AddDays(2),
+                []
             );
 
             Assert.Equal("Black Friday", promotion.Name);
