@@ -1,0 +1,130 @@
+trigger:
+  branches:
+    include:
+      - master
+      - release
+      - development
+
+resources:
+- repo: self
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+# 🏗️ Build Stage
+stages:
+- stage: Build
+  displayName: 'Build Project'
+  jobs:
+  - job: BuildJob
+    displayName: 'Build .NET Project'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Instalar .NET SDK 8.0'
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore Project'
+      inputs:
+        command: 'restore'
+        projects: '$(solution)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Project'
+      inputs:
+        command: 'build'
+        projects: '$(solution)'
+        arguments: '--configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Project'
+      inputs:
+        command: 'publish'
+        projects: '$(solution)'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
+# 🏗️ Build and push an docker image 
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        containerRegistry: 'acremetechchallenge'
+        repository: 'pipeline-acr'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+
+# 🔧 Development Stage
+- stage: Development
+  condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/development')
+  dependsOn: Build
+  jobs:
+    - job: Deploy
+      displayName: 'Development - deploy'
+      steps:
+      - task: AzureContainerApps@1
+        inputs:
+          appSourcePath: '.'
+          azureSubscription: 'Azure subscription 1(7fd057d0-9283-4ca5-b4eb-02f4a5987f2c)'
+          acrName: 'acremetechchallenge'
+          acrUsername: 'acremetechchallenge'
+          acrPassword: 'JT4HghlfveC5WV4IWqFDdTUzt/YP8DwexTJ3wBMZVa+ACRB2S590'
+          imageToDeploy: 'acremetechchallenge.azurecr.io/pipeline-acr:$(Build.BuildId)'
+          containerAppName: 'appcontainer-fiap'
+          resourceGroup: 'igti'
+          targetPort: '8080'
+
+# 🧪 Stage Environment
+- stage: Stage
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/release')
+  dependsOn: Development
+  jobs:
+  - deployment: ValidateStage
+    pool: 'local-agent'
+    displayName: 'Stage - deploy'
+    environment: 'stage'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Build Artifact'
+            inputs:
+              buildType: 'current'
+              artifactName: 'drop'
+              downloadPath: '$(System.ArtifactsDirectory)'
+
+          - script: echo "Deploy realizado no ambiente de stage com artefato de build"
+            displayName: 'Mensagem de Deploy'
+
+# 🚀 Production Environment
+- stage: Production
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  dependsOn: Stage
+  jobs:
+  - deployment: ValidateProd
+    pool: 'local-agent'
+    displayName: 'Production - deploy'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Build Artifact'
+            inputs:
+              buildType: 'current'
+              artifactName: 'drop'
+              downloadPath: '$(System.ArtifactsDirectory)'
+
+          - script: echo "Deploy realizado no ambiente de produção com artefato de build"
+            displayName: 'Mensagem de Deploy'
