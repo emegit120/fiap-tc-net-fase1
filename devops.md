@@ -76,16 +76,19 @@ As métricas e logs da aplicação são enviadas ao painel do New Relic, temos a
  - emerson1446 
  - Emerson (Dev)
 
-Link da documentação.
-https://www.figma.com/board/1s1MvlkKbtpnq9UmfFQfv3/DDD---Event-Storming?node-id=0-1&p=f
-
 GITHUB
 https://github.com/emegit120/fiap-tc-net-fase1
 
-Video
-https://drive.google.com/drive/folders/1aWhEohEN1jrx0Us3lN1ivedb1SbVVxTo?usp=sharing
+Documentação fase 2
+https://github.com/emegit120/fiap-tc-net-fase1/blob/main/devops.md
 
+Azure DevOps
+https://dev.azure.com/emerson-fiap-tech-challenge/tech-challenge-devops
+
+Video
+https://drive.google.com/drive/folders/1yTW76mSmw3caBNsf80PyWoSiK4VW3dN4
 
 ## Licença
 
 Este projeto é apenas para fins educacionais no contexto do Tech Challenge FIAP.
+
