@@ -70,7 +70,7 @@ As métricas e logs da aplicação são enviadas ao painel do New Relic, temos a
 ---
 
  Nome do grupo
- - Grupo 81
+ - Grupo 98
 
 ○ Participantes e usernames no Discord.
  - emerson1446 
@@ -91,4 +91,5 @@ https://drive.google.com/drive/folders/1yTW76mSmw3caBNsf80PyWoSiK4VW3dN4
 ## Licença
 
 Este projeto é apenas para fins educacionais no contexto do Tech Challenge FIAP.
+
 
